@@ -5,4 +5,10 @@
 			<Word>Kindberg</Word>
 		</Recognized>
 	</Words>
+	<Acronyms>
+		<CasingExceptions>
+			<Acronym>Io</Acronym><!-- Inversion of -->
+			<Acronym>IoC</Acronym><!-- Inversion of Control -->
+		</CasingExceptions>
+	</Acronyms>
 </Dictionary>
