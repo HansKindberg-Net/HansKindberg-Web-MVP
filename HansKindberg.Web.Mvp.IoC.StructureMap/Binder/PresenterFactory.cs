@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using StructureMap;
 using StructureMap.Pipeline;
 using WebFormsMvp;
@@ -54,7 +56,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 			{
 				this._container.Configure(
 					configuration =>
-					configuration.For(viewType).LifecycleIs(lifecycle).Use(viewInstance));
+					configuration.For(this.GetAbstractViewType(viewType)).LifecycleIs(lifecycle).Use(viewInstance));
 			}
 
 			IPresenter presenter = (IPresenter) this._container.GetInstance(presenterType);
@@ -75,6 +77,16 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 		{
 			if(disposing && this._container != null)
 				this._container.Dispose();
+		}
+
+		protected virtual Type GetAbstractViewType(Type viewType)
+		{
+			if(viewType == null)
+				throw new ArgumentNullException("viewType");
+
+			IEnumerable<Type> allInterfaces = viewType.GetInterfaces();
+			IEnumerable<Type> topInterfaces = allInterfaces.Except(allInterfaces.SelectMany(type => type.GetInterfaces()));
+			return topInterfaces.SingleOrDefault(type => typeof(IView).IsAssignableFrom(type)) ?? viewType;
 		}
 
 		public virtual void Release(IPresenter presenter)
