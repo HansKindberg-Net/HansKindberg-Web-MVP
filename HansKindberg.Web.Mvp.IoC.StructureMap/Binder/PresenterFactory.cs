@@ -15,7 +15,9 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 		#region Fields
 
 		private readonly IContainer _container;
-		private readonly object _registerLock = new object();
+		private static readonly string _genericIPresenterFriendlyName = typeof(IPresenter).FullName + "<TView>";
+		private readonly IDictionary<Type, Type> _presenterTypeToViewTypeMappings = new Dictionary<Type, Type>();
+		private readonly object _presenterTypeToViewTypeMappingsLockObject = new object();
 
 		#endregion
 
@@ -35,11 +37,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 
 		public virtual IPresenter Create(Type presenterType, Type viewType, IView viewInstance)
 		{
-			if(presenterType == null)
-				throw new ArgumentNullException("presenterType");
-
-			if(!typeof(IPresenter).IsAssignableFrom(presenterType))
-				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "The presenter-type \"{0}\" must implement \"{1}\".", presenterType.FullName, typeof(IPresenter).FullName), "presenterType");
+			Type abstractViewType = this.GetAbstractViewType(presenterType);
 
 			if(viewType == null)
 				throw new ArgumentNullException("viewType");
@@ -50,16 +48,10 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 			if(viewInstance == null)
 				throw new ArgumentNullException("viewInstance");
 
-			ILifecycle lifecycle = this._container.GetInstance<ILifecycle>();
+			ExplicitArguments explicitArguments = new ExplicitArguments();
+			explicitArguments.Set(abstractViewType, viewInstance);
 
-			lock(this._registerLock)
-			{
-				this._container.Configure(
-					configuration =>
-					configuration.For(this.GetAbstractViewType(viewType)).LifecycleIs(lifecycle).Use(viewInstance));
-			}
-
-			IPresenter presenter = (IPresenter) this._container.GetInstance(presenterType);
+			IPresenter presenter = (IPresenter) this._container.GetInstance(presenterType, explicitArguments);
 
 			if(presenter == null)
 				throw new StructureMapException(202, new object[] {presenterType});
@@ -79,14 +71,39 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 				this._container.Dispose();
 		}
 
-		protected virtual Type GetAbstractViewType(Type viewType)
+		protected internal virtual Type GetAbstractViewType(Type presenterType)
 		{
-			if(viewType == null)
-				throw new ArgumentNullException("viewType");
+			if(presenterType == null)
+				throw new ArgumentNullException("presenterType");
 
-			IEnumerable<Type> allInterfaces = viewType.GetInterfaces();
-			IEnumerable<Type> topInterfaces = allInterfaces.Except(allInterfaces.SelectMany(type => type.GetInterfaces()));
-			return topInterfaces.SingleOrDefault(type => typeof(IView).IsAssignableFrom(type)) ?? viewType;
+			lock(this._presenterTypeToViewTypeMappingsLockObject)
+			{
+				if(!this._presenterTypeToViewTypeMappings.ContainsKey(presenterType))
+				{
+					try
+					{
+						// ReSharper disable PossibleNullReferenceException
+						Type viewType = presenterType
+							.GetInterfaces()
+							.SingleOrDefault(type => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IPresenter<>))
+							.GetGenericArguments()[0];
+						// ReSharper restore PossibleNullReferenceException
+
+						if(viewType == null)
+							throw new ArgumentNullException("presenterType", "The view-type is null.");
+
+						this._presenterTypeToViewTypeMappings.Add(presenterType, viewType);
+
+						return viewType;
+					}
+					catch(Exception exception)
+					{
+						throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Could not resolve the view-type for presenter-type \"{0}\". The presenter-type must implement \"{1}\".", presenterType.FullName, _genericIPresenterFriendlyName), "presenterType", exception);
+					}
+				}
+
+				return this._presenterTypeToViewTypeMappings[presenterType];
+			}
 		}
 
 		public virtual void Release(IPresenter presenter)

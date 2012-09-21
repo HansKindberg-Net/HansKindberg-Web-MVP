@@ -90,23 +90,26 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 			using(new PresenterFactory(null)) {}
 		}
 
-		[TestMethod]
-		[ExpectedException(typeof(StructureMapException))]
-		public void Create_IfNotILifecycleIsRegistered_ShouldThrowAStructureMapException()
+		private static PresenterFactory CreatePresenterFactory()
 		{
-			ClearStructureMap();
-
-			using(PresenterFactory presenterFactory = new PresenterFactory(ObjectFactory.Container))
-			{
-				presenterFactory.Create(typeof(IPresenter), typeof(IView), Mock.Of<IView>());
-			}
+			return new PresenterFactory(Mock.Of<IContainer>());
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(StructureMapException))]
 		public void Create_IfStructureMapCannotGetAnInstanceOfThePresenterType_ShouldThrowAStructureMapException()
 		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
+			{
+				presenterFactory.Create(Mock.Of<IPresenter<IView>>().GetType(), typeof(IView), Mock.Of<IView>());
+			}
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_IfThePresenterTypeParameterDoesNotImplementWebFormsMvpIPresenterWithOneGenericArgument_ShouldThrowAnArgumentException()
+		{
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
 				presenterFactory.Create(typeof(IPresenter), typeof(IView), Mock.Of<IView>());
 			}
@@ -116,7 +119,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		[ExpectedException(typeof(ArgumentException))]
 		public void Create_IfThePresenterTypeParameterDoesNotImplementWebFormsMvpIPresenter_ShouldThrowAnArgumentException()
 		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
 				presenterFactory.Create(typeof(object), typeof(IView), Mock.Of<IView>());
 			}
@@ -126,7 +129,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void Create_IfThePresenterTypeParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
 				presenterFactory.Create(null, Mock.Of<Type>(), Mock.Of<IView>());
 			}
@@ -136,9 +139,9 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void Create_IfTheViewInstanceParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
-				presenterFactory.Create(typeof(IPresenter), typeof(IView), null);
+				presenterFactory.Create(Mock.Of<IPresenter<IView>>().GetType(), typeof(IView), null);
 			}
 		}
 
@@ -146,9 +149,9 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		[ExpectedException(typeof(ArgumentException))]
 		public void Create_IfTheViewTypeParameterDoesNotImplementWebFormsMvpIView_ShouldThrowAnArgumentException()
 		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
-				presenterFactory.Create(typeof(IPresenter), typeof(object), Mock.Of<IView>());
+				presenterFactory.Create(Mock.Of<IPresenter<IView>>().GetType(), typeof(object), Mock.Of<IView>());
 			}
 		}
 
@@ -156,9 +159,9 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void Create_IfTheViewTypeParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
-				presenterFactory.Create(typeof(IPresenter), null, Mock.Of<IView>());
+				presenterFactory.Create(Mock.Of<IPresenter<IView>>().GetType(), null, Mock.Of<IView>());
 			}
 		}
 
@@ -216,7 +219,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 			presenterMock.As<IDisposable>().Setup(disposable => disposable.Dispose()).Callback(() => presenterIsDisposed = true);
 			Assert.IsTrue(presenterMock.Object is IDisposable);
 			Assert.IsFalse(presenterIsDisposed);
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
 				presenterFactory.Release(presenterMock.Object);
 			}
