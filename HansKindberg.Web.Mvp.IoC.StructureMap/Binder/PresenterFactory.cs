@@ -39,13 +39,13 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Binder
 				throw new ArgumentNullException("presenterType");
 
 			if(!typeof(IPresenter).IsAssignableFrom(presenterType))
-				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "The presenter-type \"{0}\" does not implement \"{1}\".", presenterType.FullName, typeof(IPresenter).FullName), "presenterType");
+				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "The presenter-type \"{0}\" must implement \"{1}\".", presenterType.FullName, typeof(IPresenter).FullName), "presenterType");
 
 			if(viewType == null)
 				throw new ArgumentNullException("viewType");
 
 			if(!typeof(IView).IsAssignableFrom(viewType))
-				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "The view-type \"{0}\" does not implement \"{1}\".", viewType.FullName, typeof(IView).FullName), "viewType");
+				throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "The view-type \"{0}\" must implement \"{1}\".", viewType.FullName, typeof(IView).FullName), "viewType");
 
 			if(viewInstance == null)
 				throw new ArgumentNullException("viewInstance");
