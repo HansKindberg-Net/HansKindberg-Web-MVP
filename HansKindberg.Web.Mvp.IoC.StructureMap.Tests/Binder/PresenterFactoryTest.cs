@@ -114,7 +114,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Create_IfThePresenterTypeParameterIsNotOfTypeWebFormsMvpIPresenter_ShouldThrowAnArgumentException()
+		public void Create_IfThePresenterTypeParameterDoesNotImplementWebFormsMvpIPresenter_ShouldThrowAnArgumentException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -144,7 +144,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Create_IfTheViewTypeParameterIsNotOfTypeWebFormsMvpIView_ShouldThrowAnArgumentException()
+		public void Create_IfTheViewTypeParameterDoesNotImplementWebFormsMvpIView_ShouldThrowAnArgumentException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -209,7 +209,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		}
 
 		[TestMethod]
-		public void Release_IfThePresenterImplementsIDisposable_ShouldDisposeThePresenter()
+		public void Release_IfThePresenterParameterImplementsIDisposable_ShouldDisposeThePresenter()
 		{
 			bool presenterIsDisposed = false;
 			Mock<IPresenter> presenterMock = new Mock<IPresenter>();
