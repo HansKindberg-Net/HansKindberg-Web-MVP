@@ -85,14 +85,14 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void Constructor_ShouldThrowAnArgumentNullException_IfTheContainerParameterIsNull()
+		public void Constructor_IfTheContainerParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
 			using(new PresenterFactory(null)) {}
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(StructureMapException))]
-		public void Create_ShouldThrowAStructureMapException_IfNotILifecycleIsRegistered()
+		public void Create_IfNotILifecycleIsRegistered_ShouldThrowAStructureMapException()
 		{
 			ClearStructureMap();
 
@@ -104,7 +104,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 		[TestMethod]
 		[ExpectedException(typeof(StructureMapException))]
-		public void Create_ShouldThrowAStructureMapException_IfStructureMapCannotGetAnInstanceOfThePresenterType()
+		public void Create_IfStructureMapCannotGetAnInstanceOfThePresenterType_ShouldThrowAStructureMapException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -114,7 +114,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Create_ShouldThrowAnArgumentException_IfThePresenterTypeParameterIsNotOfTypeWebFormsMvpIPresenter()
+		public void Create_IfThePresenterTypeParameterIsNotOfTypeWebFormsMvpIPresenter_ShouldThrowAnArgumentException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -123,18 +123,8 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(ArgumentException))]
-		public void Create_ShouldThrowAnArgumentException_IfTheViewTypeParameterIsNotOfTypeWebFormsMvpIView()
-		{
-			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
-			{
-				presenterFactory.Create(typeof(IPresenter), typeof(object), Mock.Of<IView>());
-			}
-		}
-
-		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void Create_ShouldThrowAnArgumentNullException_IfThePresenterTypeParameterIsNull()
+		public void Create_IfThePresenterTypeParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -144,7 +134,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void Create_ShouldThrowAnArgumentNullException_IfTheViewInstanceParameterIsNull()
+		public void Create_IfTheViewInstanceParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -153,8 +143,18 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Create_IfTheViewTypeParameterIsNotOfTypeWebFormsMvpIView_ShouldThrowAnArgumentException()
+		{
+			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
+			{
+				presenterFactory.Create(typeof(IPresenter), typeof(object), Mock.Of<IView>());
+			}
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void Create_ShouldThrowAnArgumentNullException_IfTheViewTypeParameterIsNull()
+		public void Create_IfTheViewTypeParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
 			using(PresenterFactory presenterFactory = new PresenterFactory(Mock.Of<IContainer>()))
 			{
@@ -199,7 +199,9 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 			bool containerIsDisposed = false;
 			Mock<IContainer> containerMock = new Mock<IContainer>();
 			containerMock.As<IDisposable>().Setup(disposable => disposable.Dispose()).Callback(() => containerIsDisposed = true);
+			// ReSharper disable CSharpWarnings::CS0183
 			Assert.IsTrue(containerMock.Object is IDisposable);
+			// ReSharper restore CSharpWarnings::CS0183
 			Assert.IsFalse(containerIsDisposed);
 			PresenterFactory presenterFactory = new PresenterFactory(containerMock.Object);
 			presenterFactory.Dispose();
@@ -207,7 +209,7 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		}
 
 		[TestMethod]
-		public void Release_ShouldDisposeThePresenter_IfItImplementsIDisposable()
+		public void Release_IfThePresenterImplementsIDisposable_ShouldDisposeThePresenter()
 		{
 			bool presenterIsDisposed = false;
 			Mock<IPresenter> presenterMock = new Mock<IPresenter>();
