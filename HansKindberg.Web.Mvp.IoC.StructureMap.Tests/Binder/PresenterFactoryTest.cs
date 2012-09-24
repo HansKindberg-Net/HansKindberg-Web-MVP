@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using HansKindberg.Web.Mvp.IoC.StructureMap.Binder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using StructureMap;
-using StructureMap.Pipeline;
-using StructureMap.Query;
 using WebFormsMvp;
 
 namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
@@ -15,68 +11,6 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 	public class PresenterFactoryTest
 	{
 		#region Methods
-
-		[TestMethod]
-		public void Assumption_Test()
-		{
-			ClearStructureMap();
-
-			ValidateThatStructureMapIsCleared();
-
-			ObjectFactory.Initialize(initializer => initializer.For<ILifecycle>().Use<ThreadLocalStorageLifecycle>());
-
-			IContainer container = ObjectFactory.Container;
-
-			ILifecycle lifecycle = container.GetInstance<ILifecycle>();
-
-			Type viewType = typeof(IView);
-			IView viewInstance = Mock.Of<IView>();
-
-			container.Configure(configuration => configuration.For(viewType).LifecycleIs(lifecycle).Use(viewInstance));
-
-			IEnumerable<InstanceRef> allInstances = ObjectFactory.Model.AllInstances.ToList();
-			Assert.AreEqual(4, allInstances.Count());
-
-			IView viewFromStructureMap = container.GetInstance<IView>();
-			Assert.AreEqual(viewInstance, viewFromStructureMap);
-
-			IView anotherViewInstance = Mock.Of<IView>();
-
-			container.Configure(configuration => configuration.For(viewType).LifecycleIs(lifecycle).Use(anotherViewInstance));
-
-			allInstances = ObjectFactory.Model.AllInstances.ToList();
-			Assert.AreEqual(5, allInstances.Count());
-
-			viewFromStructureMap = container.GetInstance<IView>();
-			Assert.AreEqual(anotherViewInstance, viewFromStructureMap);
-
-			IView yetAnotherViewInstance = Mock.Of<IView>();
-
-			container.Configure(configuration => configuration.For(viewType).LifecycleIs(lifecycle).Use(yetAnotherViewInstance));
-
-			allInstances = container.Model.AllInstances.ToList();
-			Assert.AreEqual(6, allInstances.Count());
-
-			viewFromStructureMap = container.GetInstance<IView>();
-			Assert.AreEqual(yetAnotherViewInstance, viewFromStructureMap);
-
-			Assert.AreEqual(3, lifecycle.FindCache().Count);
-			lifecycle.FindCache().DisposeAndClear();
-			Assert.AreEqual(0, lifecycle.FindCache().Count);
-			lifecycle.EjectAll();
-
-			viewFromStructureMap = container.GetInstance<IView>();
-			Assert.AreEqual(yetAnotherViewInstance, viewFromStructureMap);
-
-			container.EjectAllInstancesOf<IView>();
-			allInstances = container.Model.AllInstances.ToList();
-			Assert.AreEqual(3, allInstances.Count());
-
-			viewFromStructureMap = container.TryGetInstance<IView>();
-			Assert.IsNull(viewFromStructureMap);
-
-			//Assert.Fail(container.WhatDoIHave());
-		}
 
 		private static void ClearStructureMap()
 		{
@@ -99,6 +33,8 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 		[ExpectedException(typeof(StructureMapException))]
 		public void Create_IfStructureMapCannotGetAnInstanceOfThePresenterType_ShouldThrowAStructureMapException()
 		{
+			ClearStructureMap();
+
 			using(PresenterFactory presenterFactory = CreatePresenterFactory())
 			{
 				presenterFactory.Create(Mock.Of<IPresenter<IView>>().GetType(), typeof(IView), Mock.Of<IView>());
@@ -175,7 +111,6 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 
 			ObjectFactory.Initialize(initializer =>
 			{
-				initializer.For<ILifecycle>().Use<ThreadLocalStorageLifecycle>();
 				initializer.For<IComparable>().Use(comparable);
 				initializer.For<IDisposable>().Use(disposable);
 			});
@@ -224,14 +159,6 @@ namespace HansKindberg.Web.Mvp.IoC.StructureMap.Tests.Binder
 				presenterFactory.Release(presenterMock.Object);
 			}
 			Assert.IsTrue(presenterIsDisposed);
-		}
-
-		private static void ValidateThatStructureMapIsCleared()
-		{
-			IEnumerable<InstanceRef> allInstances = ObjectFactory.Model.AllInstances.ToList();
-			Assert.AreEqual(2, allInstances.Count());
-			Assert.AreEqual(typeof(Func<>), allInstances.ElementAt(0).PluginType);
-			Assert.AreEqual(typeof(IContainer), allInstances.ElementAt(1).PluginType);
 		}
 
 		#endregion

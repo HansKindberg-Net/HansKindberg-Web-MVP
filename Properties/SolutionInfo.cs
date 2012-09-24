@@ -55,13 +55,13 @@ using System.Runtime.InteropServices;
 
 internal static class SolutionInfo
 {
-	#region Fields
-
 	// When you increase the majorversion: minorversion = 0, buildnumber = 0, revision = 0, fileversionrevision = 0
 	// When you increase the minorversion: buildnumber = 0, revision = 0, fileversionrevision = 0
 	// When you increase the buildnumber: revision = 0, fileversionrevision = 0
 	// Else - foreach change: revision++, fileversionrevision++
 	// Else - foreach small fix: fileversionrevision++
+
+	#region Fields
 
 	internal const string AssemblyFileVersion = _assemblyBaseVersion + "." + _fileVersionRevision;
 	internal const string AssemblyInformationalVersion = _assemblyBaseVersion + "-alpha-" + _revision;
