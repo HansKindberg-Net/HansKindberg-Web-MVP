@@ -31,7 +31,7 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 		}
 
 		[TestMethod]
-		public void Constructor_ShouldAddAnDataBindingChildrenEventHandler()
+		public void Constructor_ShouldAddADataBindingChildrenEventHandler()
 		{
 			ConstructorShouldAddAnEventHandler("DataBindingChildren");
 		}
