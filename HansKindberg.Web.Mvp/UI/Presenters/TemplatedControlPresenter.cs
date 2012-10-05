@@ -36,7 +36,7 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 
 		#region Eventhandlers
 
-		protected internal virtual void OnViewCreatingChildControls(object sender, EventArgs e) {}
+		protected internal abstract void OnViewCreatingChildControls(object sender, EventArgs e);
 
 		#endregion
 	}
