@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web.UI;
 using HansKindberg.Web.Mvp.UI.Presenters;
 using HansKindberg.Web.Mvp.UI.Views;
@@ -62,6 +63,47 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 			presenterMock.Object.AddTemplate(container, templateMock.Object);
 			templateMock.Verify(template => template.InstantiateIn(container), Times.Once());
 		}
+
+		private static void ConstructorShouldAddAnEventHandler(string eventName)
+		{
+			using(TemplatedControlPresenterTestTemplatedControlView view = new TemplatedControlPresenterTestTemplatedControlView())
+			{
+				FieldInfo eventField = typeof(TemplatedControlView).GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic);
+				Assert.IsNotNull(eventField);
+				Assert.IsNull(eventField.GetValue(view));
+
+				TemplatedControlPresenterTestTemplatedControlPresenter<TemplatedControlPresenterTestTemplatedControlView> presenter = new TemplatedControlPresenterTestTemplatedControlPresenter<TemplatedControlPresenterTestTemplatedControlView>(view);
+				Assert.IsNotNull(presenter);
+
+				Delegate eventDelegate = (Delegate) eventField.GetValue(view);
+				Assert.AreEqual(1, eventDelegate.GetInvocationList().Length);
+				Assert.AreEqual("OnView" + eventName, eventDelegate.GetInvocationList()[0].Method.Name);
+			}
+		}
+
+		[TestMethod]
+		public void Constructor_ShouldAddACreatingChildControlsEventHandler()
+		{
+			ConstructorShouldAddAnEventHandler("CreatingChildControls");
+		}
+
+		#endregion
+	}
+
+	internal class TemplatedControlPresenterTestTemplatedControlView : TemplatedControlView {}
+
+	internal class TemplatedControlPresenterTestTemplatedControlPresenter<TView> : TemplatedControlPresenter<TView>
+		where TView : class, ITemplatedControlView
+	{
+		#region Constructors
+
+		public TemplatedControlPresenterTestTemplatedControlPresenter(TView view) : base(view) {}
+
+		#endregion
+
+		#region Methods
+
+		protected internal override void OnViewCreatingChildControls(object sender, EventArgs e) {}
 
 		#endregion
 	}
