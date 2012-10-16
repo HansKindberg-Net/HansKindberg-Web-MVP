@@ -44,9 +44,12 @@
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Xml" />
     <Reference Include="WebFormsMvp">
       <HintPath>..\packages\WebFormsMvp.1.4.1.0\lib\WebFormsMvp.dll</HintPath>
     </Reference>
@@ -71,11 +74,14 @@
     <Compile Include="Models\DefaultModel.cs" />
     <Compile Include="Models\MasterModels\DefaultMasterModel.cs" />
     <Compile Include="Models\PagingSampleModel.cs" />
+    <Compile Include="Models\PresenterDiscoveryStrategySampleModel.cs" />
     <Compile Include="Models\SamplesModel.cs" />
     <Compile Include="Presenters\DefaultPresenter.cs" />
     <Compile Include="Presenters\MasterPresenters\DefaultMasterPresenter.cs" />
     <Compile Include="Presenters\PagingSamplePresenter.cs" />
+    <Compile Include="Presenters\PresenterDiscoveryStrategySamplePresenter.cs" />
     <Compile Include="Presenters\SamplesPresenter.cs" />
+    <Compile Include="Presenters\WebControls\PresenterDiscoveryStrategySampleControlPresenter.cs" />
     <Compile Include="Presenters\WebControls\RepeaterPresenter.cs" />
     <Compile Include="Presenters\WebControls\SimpleMvpControlPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,6 +104,7 @@
     </Compile>
     <Compile Include="Views\IDefaultView.cs" />
     <Compile Include="Views\IPagingSampleView.cs" />
+    <Compile Include="Views\IPresenterDiscoveryStrategySampleView.cs" />
     <Compile Include="Views\ISamplesView.cs" />
     <Compile Include="Views\MasterViews\DefaultMasterView.master.cs">
       <DependentUpon>DefaultMasterView.master</DependentUpon>
@@ -117,6 +124,13 @@
     <Compile Include="Views\PagingSampleView.aspx.designer.cs">
       <DependentUpon>PagingSampleView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\PresenterDiscoveryStrategySampleView.aspx.cs">
+      <DependentUpon>PresenterDiscoveryStrategySampleView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PresenterDiscoveryStrategySampleView.aspx.designer.cs">
+      <DependentUpon>PresenterDiscoveryStrategySampleView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\SamplesView.aspx.cs">
       <DependentUpon>SamplesView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -127,14 +141,17 @@
     <Compile Include="Views\View.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Views\WebControls\IPresenterDiscoveryStrategySampleControlView.cs" />
     <Compile Include="Views\WebControls\IRepeaterView.cs" />
     <Compile Include="Views\WebControls\ISimpleMvpControlView.cs" />
+    <Compile Include="Views\WebControls\PresenterDiscoveryStrategySampleControlView.cs" />
     <Compile Include="Views\WebControls\RepeaterView.cs" />
     <Compile Include="Views\WebControls\SimpleMvpControlView.cs" />
     <Content Include="ControlWithoutMvpPageSample.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Views\DefaultView.aspx" />
     <Content Include="Views\PagingSampleView.aspx" />
+    <Content Include="Views\PresenterDiscoveryStrategySampleView.aspx" />
     <Content Include="Views\SamplesView.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

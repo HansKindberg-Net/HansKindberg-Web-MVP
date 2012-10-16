@@ -57,6 +57,7 @@
     <Compile Include="..\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Binder\ConventionBasedPresenterDiscoveryStrategy.cs" />
     <Compile Include="Binder\IPresenterBinder.cs" />
     <Compile Include="Binder\PresenterBinderWrapper.cs" />
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />

@@ -45,6 +45,9 @@
 								<li<%= this.Model.IsActiveFilePath["/Views/PagingSampleView.aspx"] ? " class=\"active\"" : string.Empty %>>
 									<a href="/Views/PagingSampleView.aspx">Paging sample</a>
 								</li>
+								<li<%= this.Model.IsActiveFilePath["/Views/PresenterDiscoveryStrategySampleView.aspx"] ? " class=\"active\"" : string.Empty %>>
+									<a href="/Views/PresenterDiscoveryStrategySampleView.aspx">Customized presenter discovery strategy sample</a>
+								</li>
 							</ul>
 						</div> <!-- /well -->
 					</div>
