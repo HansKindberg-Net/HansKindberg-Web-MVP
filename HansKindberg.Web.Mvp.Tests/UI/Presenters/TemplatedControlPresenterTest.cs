@@ -64,11 +64,11 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 			templateMock.Verify(template => template.InstantiateIn(container), Times.Once());
 		}
 
-		private static void ConstructorShouldAddAnEventHandler(string eventName)
+		private static void ConstructorShouldAddAnEventHandler(string eventName, Type eventFieldType)
 		{
 			using(TemplatedControlPresenterTestTemplatedControlView view = new TemplatedControlPresenterTestTemplatedControlView())
 			{
-				FieldInfo eventField = typeof(TemplatedControlView).GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic);
+				FieldInfo eventField = eventFieldType.GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic);
 				Assert.IsNotNull(eventField);
 				Assert.IsNull(eventField.GetValue(view));
 
@@ -84,7 +84,19 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 		[TestMethod]
 		public void Constructor_ShouldAddACreatingChildControlsEventHandler()
 		{
-			ConstructorShouldAddAnEventHandler("CreatingChildControls");
+			ConstructorShouldAddAnEventHandler("CreatingChildControls", typeof(ControlView));
+		}
+
+		[TestMethod]
+		public void Constructor_ShouldAddADataBindingChildrenEventHandler()
+		{
+			ConstructorShouldAddAnEventHandler("DataBindingChildren", typeof(ControlView));
+		}
+
+		[TestMethod]
+		public void Constructor_ShouldAddAnEnsuringChildControlsEventHandler()
+		{
+			ConstructorShouldAddAnEventHandler("EnsuringChildControls", typeof(ControlView));
 		}
 
 		#endregion

@@ -4,9 +4,10 @@
 	{
 		#region Properties
 
-		int ItemsPerPagingItem { get; set; }
-		bool PagingEnabled { get; set; }
-		int PagingItems { get; }
+		int ItemsPerPagingItem { get; }
+		int? MaximumDisplayedPagingItems { get; }
+		bool PagingEnabled { get; }
+		int PagingItems { get; set; }
 		int PagingPosition { get; }
 
 		#endregion

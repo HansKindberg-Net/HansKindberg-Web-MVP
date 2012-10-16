@@ -57,17 +57,33 @@
     <Compile Include="..\Properties\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Binder\IPresenterBinder.cs" />
+    <Compile Include="Binder\PresenterBinderWrapper.cs" />
     <Compile Include="CodeAnalysis\AssemblySuppressions.cs" />
     <Compile Include="IPageableView.cs" />
+    <Compile Include="IPageableViewResolver.cs" />
+    <Compile Include="IPageViewHost.cs" />
     <Compile Include="IView.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PageableViewResolver.cs" />
+    <Compile Include="PageViewHostWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\IPage.cs" />
+    <Compile Include="UI\PageWrapper.cs" />
+    <Compile Include="UI\Presenters\AutoDataBindControlPresenter.cs" />
     <Compile Include="UI\Presenters\ControlPresenter.cs" />
+    <Compile Include="UI\Presenters\PagingPresenter.cs" />
     <Compile Include="UI\Presenters\TemplatedControlPresenter.cs" />
+    <Compile Include="UI\Views\AutoDataBindControlView.cs" />
     <Compile Include="UI\Views\ControlView.cs" />
+    <Compile Include="UI\Views\IAutoDataBindControlView.cs" />
     <Compile Include="UI\Views\IControlView.cs" />
+    <Compile Include="UI\Views\IPagingView.cs" />
     <Compile Include="UI\Views\ITemplatedControlView.cs" />
+    <Compile Include="UI\Views\PagingItemContainer.cs" />
+    <Compile Include="UI\Views\PagingSummaryContainer.cs" />
+    <Compile Include="UI\Views\PagingView.cs" />
     <Compile Include="UI\Views\TemplatedControlView.cs" />
     <Compile Include="ViewHelper.cs" />
   </ItemGroup>

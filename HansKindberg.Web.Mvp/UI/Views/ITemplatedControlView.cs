@@ -1,22 +1,8 @@
-﻿using System;
-using System.Web.UI;
+﻿using System.Web.UI;
 
 namespace HansKindberg.Web.Mvp.UI.Views
 {
-	public interface ITemplatedControlView : IControlView, INamingContainer
-	{
-		#region Events
+	public interface ITemplatedControlView : IAutoDataBindControlView, INamingContainer {}
 
-		event EventHandler CreatingChildControls;
-
-		#endregion
-
-		#region Properties
-
-		ControlCollection Controls { get; }
-
-		#endregion
-	}
-
-	public interface ITemplatedControlView<TModel> : ITemplatedControlView, WebFormsMvp.IView<TModel> where TModel : class, new() {}
+	public interface ITemplatedControlView<TModel> : ITemplatedControlView, IAutoDataBindControlView<TModel> where TModel : class, new() {}
 }

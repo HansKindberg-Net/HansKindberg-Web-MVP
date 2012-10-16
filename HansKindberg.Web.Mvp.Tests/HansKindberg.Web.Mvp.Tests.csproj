@@ -76,6 +76,8 @@
     <Compile Include="UI\Presenters\ControlPresenterTest.cs" />
     <Compile Include="UI\Presenters\TemplatedControlPresenterTest.cs" />
     <Compile Include="UI\Views\ControlViewTest.cs" />
+    <Compile Include="UI\Views\PagingItemContainerTest.cs" />
+    <Compile Include="UI\Views\PagingSummaryContainerTest.cs" />
     <Compile Include="UI\Views\TemplatedControlViewTest.cs" />
     <Compile Include="ViewHelperTest.cs" />
   </ItemGroup>

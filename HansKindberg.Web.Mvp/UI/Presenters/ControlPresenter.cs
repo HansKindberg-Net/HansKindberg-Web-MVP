@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.Web.UI;
 using HansKindberg.Web.Mvp.UI.Views;
 using WebFormsMvp;
 
@@ -10,33 +9,25 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 	{
 		#region Constructors
 
-		protected ControlPresenter(TView view) : base(view)
-		{
-			this.View.DataBindingChildren += this.OnViewDataBindingChildren;
-			this.View.EnsuringChildControls += this.OnViewEnsuringChildControls;
-		}
+		protected ControlPresenter(TView view) : base(view) {}
 
 		#endregion
 
-		#region Eventhandlers
+		#region Methods
 
-		protected internal virtual void OnViewDataBindingChildren(object sender, CancelEventArgs e)
+		protected internal virtual Control FindControlHierarchic(string controlId)
 		{
-			if(e == null)
-				throw new ArgumentNullException("e");
-
-			if(e.Cancel)
-				return;
-
-			this.View.EnsureChildControls(true);
+			return this.View.FindControl(controlId) ?? this.FindControlHierarchic(this.View.NamingContainer, controlId);
 		}
 
-		protected internal virtual void OnViewEnsuringChildControls(object sender, CancelEventArgs e)
+		protected internal virtual Control FindControlHierarchic(Control namingContainer, string controlId)
 		{
-			if(e == null)
-				throw new ArgumentNullException("e");
+			if(namingContainer == null)
+				return null;
 
-			e.Cancel = !this.View.EnsureChildControlsEnabled;
+			Control foundControl = namingContainer.FindControl(controlId) ?? this.FindControlHierarchic(namingContainer.NamingContainer, controlId);
+
+			return foundControl;
 		}
 
 		#endregion

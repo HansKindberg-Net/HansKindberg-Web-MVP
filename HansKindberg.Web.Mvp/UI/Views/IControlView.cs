@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Web.UI;
 
 namespace HansKindberg.Web.Mvp.UI.Views
 {
@@ -7,6 +8,7 @@ namespace HansKindberg.Web.Mvp.UI.Views
 	{
 		#region Events
 
+		event EventHandler CreatingChildControls;
 		event EventHandler<CancelEventArgs> DataBindingChildren;
 		event EventHandler<CancelEventArgs> EnsuringChildControls;
 
@@ -14,7 +16,9 @@ namespace HansKindberg.Web.Mvp.UI.Views
 
 		#region Properties
 
-		bool EnsureChildControlsEnabled { get; set; }
+		ControlCollection Controls { get; }
+		bool DesignMode { get; }
+		Control NamingContainer { get; }
 		bool Visible { get; set; }
 
 		#endregion
@@ -22,7 +26,7 @@ namespace HansKindberg.Web.Mvp.UI.Views
 		#region Methods
 
 		void DataBind();
-		void EnsureChildControls(bool force);
+		Control FindControl(string id);
 
 		#endregion
 	}

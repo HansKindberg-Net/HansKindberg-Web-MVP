@@ -1,20 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Web.UI;
-using WebFormsMvp.Web;
 
 namespace HansKindberg.Web.Mvp.UI.Views
 {
 	public abstract class ControlView : Control, IControlView
 	{
-		#region Fields
-
-		private const string _ensureChildControlsEnabledViewStateName = "EnsureChildControlsEnabled";
-
-		#endregion
-
 		#region Events
 
+		public event EventHandler CreatingChildControls;
 		public event EventHandler<CancelEventArgs> DataBindingChildren;
 		public event EventHandler<CancelEventArgs> EnsuringChildControls;
 
@@ -22,17 +16,19 @@ namespace HansKindberg.Web.Mvp.UI.Views
 
 		#region Properties
 
-		[Bindable(true), Category("Information"), DefaultValue(false)]
-		public virtual bool EnsureChildControlsEnabled
+		[Browsable(false)]
+		public new virtual bool DesignMode
 		{
-			get
-			{
-				bool? nullable = this.ViewState[_ensureChildControlsEnabledViewStateName] as bool?;
-				return nullable.HasValue && nullable.Value;
-			}
-			set { this.ViewState[_ensureChildControlsEnabledViewStateName] = value; }
+			get { return base.DesignMode; }
 		}
 
+		// ReSharper disable InconsistentNaming
+		protected internal virtual IPage IPage // ReSharper restore InconsistentNaming
+		{
+			get { return (PageWrapper) this.Page; }
+		}
+
+		[Browsable(false)]
 		public virtual bool ThrowExceptionIfNoPresenterBound
 		{
 			get { return true; }
@@ -40,7 +36,23 @@ namespace HansKindberg.Web.Mvp.UI.Views
 
 		#endregion
 
+		#region Eventhandlers
+
+		protected override void OnInit(EventArgs e)
+		{
+			PageViewHostWrapper.Register(this, this.Context, false, this.IPage);
+			base.OnInit(e);
+		}
+
+		#endregion
+
 		#region Methods
+
+		protected override void CreateChildControls()
+		{
+			if(this.CreatingChildControls != null)
+				this.CreatingChildControls(this, EventArgs.Empty);
+		}
 
 		protected override void DataBindChildren()
 		{
@@ -59,12 +71,7 @@ namespace HansKindberg.Web.Mvp.UI.Views
 
 		protected override void EnsureChildControls()
 		{
-			this.EnsureChildControls(false);
-		}
-
-		public virtual void EnsureChildControls(bool force)
-		{
-			if(!force && this.EnsuringChildControls != null)
+			if(this.EnsuringChildControls != null)
 			{
 				CancelEventArgs cancelEventArgs = new CancelEventArgs();
 
@@ -75,16 +82,6 @@ namespace HansKindberg.Web.Mvp.UI.Views
 			}
 
 			base.EnsureChildControls();
-		}
-
-		#endregion
-
-		#region Eventhandlers
-
-		protected override void OnInit(EventArgs e)
-		{
-			PageViewHost.Register(this, this.Context, false);
-			base.OnInit(e);
 		}
 
 		#endregion

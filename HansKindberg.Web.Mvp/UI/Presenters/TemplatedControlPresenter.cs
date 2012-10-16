@@ -5,7 +5,7 @@ using HansKindberg.Web.Mvp.UI.Views;
 
 namespace HansKindberg.Web.Mvp.UI.Presenters
 {
-	public abstract class TemplatedControlPresenter<TView> : ControlPresenter<TView>
+	public abstract class TemplatedControlPresenter<TView> : AutoDataBindControlPresenter<TView>
 		where TView : class, ITemplatedControlView
 	{
 		#region Constructors
@@ -36,7 +36,11 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 
 		#region Eventhandlers
 
-		protected internal abstract void OnViewCreatingChildControls(object sender, EventArgs e);
+		protected internal virtual void OnViewCreatingChildControls(object sender, EventArgs e)
+		{
+			if(!this.OnDataBindingRaised)
+				this.View.DataBind(true, false, false);
+		}
 
 		#endregion
 	}
