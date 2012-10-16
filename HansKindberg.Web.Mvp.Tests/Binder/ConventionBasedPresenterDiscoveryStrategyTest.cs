@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using HansKindberg.Web.Mvp.Binder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -32,66 +30,77 @@ namespace HansKindberg.Web.Mvp.Tests.Binder
 		#region Methods
 
 		[TestMethod]
-		public void CandidatePresenterTypeFullNameFormats_ShouldReturnTheTransformedValuesFromTheThePresenterNamespacesConstructorParameterAsTheFirstItems()
+		[ExpectedException(typeof(ArgumentNullException))]
+		[SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "HansKindberg.Web.Mvp.Binder.ConventionBasedPresenterDiscoveryStrategy")]
+		public void Constructor_IfTheBuildManagerParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
-			int numberOfPresenterNamespaces = DateTime.Now.Second;
-			List<string> expectedCandidatePresenterTypeFullNameFormats = new List<string>();
-			List<string> presenterNamespaces = new List<string>();
+			new ConventionBasedPresenterDiscoveryStrategy(null);
+		}
 
-			for(int i = 1; i <= numberOfPresenterNamespaces; i++)
+		private static void GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespaceTest(ConventionBasedPresenterDiscoveryStrategy conventionBasedPresenterDiscoveryStrategy, Mock<IType> typeMock, string viewTypeNamespace, string expectedCandidatePresenterTypeFullNameFormat)
+		{
+			typeMock.Setup(type => type.Namespace).Returns(viewTypeNamespace);
+			Assert.AreEqual(expectedCandidatePresenterTypeFullNameFormat, conventionBasedPresenterDiscoveryStrategy.GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespace(typeMock.Object));
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespace_IfTheViewTypeParameterIsNull_ShouldThrowAnArgumentNullException()
+		{
+			new ConventionBasedPresenterDiscoveryStrategy(Mock.Of<IBuildManager>()).GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespace(null);
+		}
+
+		[TestMethod]
+		public void GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespace_Test()
+		{
+			Mock<ConventionBasedPresenterDiscoveryStrategy> conventionBasedPresenterDiscoveryStrategyMock = new Mock<ConventionBasedPresenterDiscoveryStrategy>(new object[] {Mock.Of<IBuildManager>()}) {CallBase = true};
+			conventionBasedPresenterDiscoveryStrategyMock.Setup(presenterDiscoveryStrategy => presenterDiscoveryStrategy.ViewNamespaceSuffixes).Returns(new[] {".Tests", ".Test"});
+			ConventionBasedPresenterDiscoveryStrategy conventionBasedPresenterDiscoveryStrategy = conventionBasedPresenterDiscoveryStrategyMock.Object;
+			Mock<IType> typeMock = new Mock<IType>();
+
+			GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespaceTest(conventionBasedPresenterDiscoveryStrategy, typeMock, "First.Second.Third.Tests", "First.Second.Third.Presenters.{presenter}");
+			GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespaceTest(conventionBasedPresenterDiscoveryStrategy, typeMock, "First.Second.Third.Test", "First.Second.Third.Presenters.{presenter}");
+			GetCandidatePresenterTypeFullNameFormatFromViewTypeNamespaceTest(conventionBasedPresenterDiscoveryStrategy, typeMock, "First.Second.Third.Fourth", "First.Second.Third.Fourth.Presenters.{presenter}");
+		}
+
+		private void GetCandidatePresenterTypeFullNameFormatsTest(ConventionBasedPresenterDiscoveryStrategy conventionBasedPresenterDiscoveryStrategy, Mock<IType> typeMock, string viewTypeNamespace, string expectedFirstCandidatePresenterTypeFullNameFormat)
+		{
+			typeMock.Setup(type => type.Namespace).Returns(viewTypeNamespace);
+			IEnumerable<string> actualCandidatePresenterTypeFullNameFormats = conventionBasedPresenterDiscoveryStrategy.GetCandidatePresenterTypeFullNameFormats(typeMock.Object);
+			// ReSharper disable PossibleMultipleEnumeration			
+			Assert.IsTrue(actualCandidatePresenterTypeFullNameFormats.Count() == this._originalCandidatePresenterTypeFullNameFormats.Count() + 1);
+			Assert.AreEqual(expectedFirstCandidatePresenterTypeFullNameFormat, actualCandidatePresenterTypeFullNameFormats.ElementAt(0));
+			for(int i = 0; i < this._originalCandidatePresenterTypeFullNameFormats.Count(); i++)
 			{
-				expectedCandidatePresenterTypeFullNameFormats.Add("Test" + i.ToString(CultureInfo.InvariantCulture) + ".{presenter}");
-				presenterNamespaces.Add("Test" + i.ToString(CultureInfo.InvariantCulture));
-			}
-
-			expectedCandidatePresenterTypeFullNameFormats.AddRange(this._originalCandidatePresenterTypeFullNameFormats);
-
-			IEnumerable<string> actualCandidatePresenterTypeFullNameFormats = new ConventionBasedPresenterDiscoveryStrategy(presenterNamespaces, Mock.Of<IBuildManager>()).CandidatePresenterTypeFullNameFormats;
-
-			// ReSharper disable PossibleMultipleEnumeration
-			Assert.AreEqual(expectedCandidatePresenterTypeFullNameFormats.Count, actualCandidatePresenterTypeFullNameFormats.Count());
-
-			for(int i = 0; i < presenterNamespaces.Count; i++)
-			{
-				Assert.AreEqual(expectedCandidatePresenterTypeFullNameFormats[i], actualCandidatePresenterTypeFullNameFormats.ElementAt(i));
-				Assert.AreEqual("Test" + (i + 1).ToString(CultureInfo.InvariantCulture) + ".{presenter}", actualCandidatePresenterTypeFullNameFormats.ElementAt(i));
+				Assert.AreEqual(this._originalCandidatePresenterTypeFullNameFormats.ElementAt(i), actualCandidatePresenterTypeFullNameFormats.ElementAt(i + 1));
 			}
 			// ReSharper restore PossibleMultipleEnumeration
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		[SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "HansKindberg.Web.Mvp.Binder.ConventionBasedPresenterDiscoveryStrategy")]
-		public void Constructor_IfThePresenterNamespacesParameterIsNull_ShouldThrowAnArgumentNullException()
+		public void GetCandidatePresenterTypeFullNameFormats_IfTheViewTypeParameterIsNull_ShouldThrowAnArgumentNullException()
 		{
-			new ConventionBasedPresenterDiscoveryStrategy(null, Mock.Of<IBuildManager>());
+			new ConventionBasedPresenterDiscoveryStrategy(Mock.Of<IBuildManager>()).GetCandidatePresenterTypeFullNameFormats(null);
 		}
 
 		[TestMethod]
-		public void Constructor_ShouldTransformThePresenterNamespacesToCandidatePresenterTypeFullNameFormats()
+		public void GetCandidatePresenterTypeFullNameFormats_Test()
 		{
-			int numberOfPresenterNamespaces = DateTime.Now.Second;
-			List<string> expectedCandidatePresenterTypeFullNameFormats = new List<string>();
-			List<string> presenterNamespaces = new List<string>();
+			Mock<ConventionBasedPresenterDiscoveryStrategy> conventionBasedPresenterDiscoveryStrategyMock = new Mock<ConventionBasedPresenterDiscoveryStrategy>(new object[] {Mock.Of<IBuildManager>()}) {CallBase = true};
+			conventionBasedPresenterDiscoveryStrategyMock.Setup(presenterDiscoveryStrategy => presenterDiscoveryStrategy.ViewNamespaceSuffixes).Returns(new[] {".Tests", ".Test"});
+			ConventionBasedPresenterDiscoveryStrategy conventionBasedPresenterDiscoveryStrategy = conventionBasedPresenterDiscoveryStrategyMock.Object;
+			Mock<IType> typeMock = new Mock<IType>();
 
-			for(int i = 1; i <= numberOfPresenterNamespaces; i++)
-			{
-				expectedCandidatePresenterTypeFullNameFormats.Add("Test" + i.ToString(CultureInfo.InvariantCulture) + ".{presenter}");
-				presenterNamespaces.Add("Test" + i.ToString(CultureInfo.InvariantCulture));
-			}
+			this.GetCandidatePresenterTypeFullNameFormatsTest(conventionBasedPresenterDiscoveryStrategy, typeMock, "First.Second.Third.Tests", "First.Second.Third.Presenters.{presenter}");
+			this.GetCandidatePresenterTypeFullNameFormatsTest(conventionBasedPresenterDiscoveryStrategy, typeMock, "First.Second.Third.Test", "First.Second.Third.Presenters.{presenter}");
+			this.GetCandidatePresenterTypeFullNameFormatsTest(conventionBasedPresenterDiscoveryStrategy, typeMock, "First.Second.Third.Fourth", "First.Second.Third.Fourth.Presenters.{presenter}");
+		}
 
-			ConventionBasedPresenterDiscoveryStrategy conventionBasedPresenterDiscoveryStrategy = new ConventionBasedPresenterDiscoveryStrategy(presenterNamespaces, Mock.Of<IBuildManager>());
-
-			// ReSharper disable PossibleNullReferenceException
-			IEnumerable<string> actualCandidatePresenterTypeFullNameFormats = (IEnumerable<string>) typeof(ConventionBasedPresenterDiscoveryStrategy).GetField("_candidatePresenterTypeFullNameFormats", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(conventionBasedPresenterDiscoveryStrategy);
-			// ReSharper restore PossibleNullReferenceException
-
-			Assert.AreEqual(expectedCandidatePresenterTypeFullNameFormats.Count, actualCandidatePresenterTypeFullNameFormats.Count());
-
-			for(int i = 0; i < expectedCandidatePresenterTypeFullNameFormats.Count; i++)
-			{
-				Assert.AreEqual(expectedCandidatePresenterTypeFullNameFormats[i], actualCandidatePresenterTypeFullNameFormats.ElementAt(i));
-			}
+		[TestMethod]
+		public void PrerequisiteTest()
+		{
+			Assert.AreEqual("HansKindberg.Web.Mvp.Tests.Binder", this.GetType().Namespace);
 		}
 
 		#endregion

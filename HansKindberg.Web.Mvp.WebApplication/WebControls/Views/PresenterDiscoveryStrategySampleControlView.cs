@@ -1,6 +1,6 @@
-﻿using HansKindberg.Web.Mvp.UI.Views;
+using HansKindberg.Web.Mvp.UI.Views;
 
-namespace HansKindberg.Web.Mvp.WebApplication.Views.WebControls
+namespace HansKindberg.Web.Mvp.WebApplication.WebControls.Views
 {
 	public class PresenterDiscoveryStrategySampleControlView : ControlView, IPresenterDiscoveryStrategySampleControlView {}
 }

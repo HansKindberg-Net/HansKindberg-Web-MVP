@@ -21,7 +21,7 @@ namespace HansKindberg.Web.Mvp.WebApplication
 		{
 			new Bootstrapper().BootstrapStructureMap();
 			PresenterBinder.Factory = new PresenterFactory(ObjectFactory.Container);
-			PresenterBinder.DiscoveryStrategy = new CompositePresenterDiscoveryStrategy(new AttributeBasedPresenterDiscoveryStrategy(), new ConventionBasedPresenterDiscoveryStrategy(new[] {"HansKindberg.Web.Mvp.WebApplication.Presenters.WebControls"}, new BuildManagerWrapper()));
+			PresenterBinder.DiscoveryStrategy = new CompositePresenterDiscoveryStrategy(new AttributeBasedPresenterDiscoveryStrategy(), new ConventionBasedPresenterDiscoveryStrategy(new BuildManagerWrapper()));
 		}
 
 		public void BootstrapStructureMap()

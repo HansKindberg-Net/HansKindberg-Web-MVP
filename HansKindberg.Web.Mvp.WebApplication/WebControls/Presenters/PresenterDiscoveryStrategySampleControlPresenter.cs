@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using HansKindberg.Web.Mvp.UI.Presenters;
-using HansKindberg.Web.Mvp.WebApplication.Views.WebControls;
+using HansKindberg.Web.Mvp.WebApplication.WebControls.Views;
 
-namespace HansKindberg.Web.Mvp.WebApplication.Presenters.WebControls
+namespace HansKindberg.Web.Mvp.WebApplication.WebControls.Presenters
 {
 	public class PresenterDiscoveryStrategySampleControlPresenter : ControlPresenter<IPresenterDiscoveryStrategySampleControlView>
 	{

@@ -81,7 +81,6 @@
     <Compile Include="Presenters\PagingSamplePresenter.cs" />
     <Compile Include="Presenters\PresenterDiscoveryStrategySamplePresenter.cs" />
     <Compile Include="Presenters\SamplesPresenter.cs" />
-    <Compile Include="Presenters\WebControls\PresenterDiscoveryStrategySampleControlPresenter.cs" />
     <Compile Include="Presenters\WebControls\RepeaterPresenter.cs" />
     <Compile Include="Presenters\WebControls\SimpleMvpControlPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,12 +140,13 @@
     <Compile Include="Views\View.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\WebControls\IPresenterDiscoveryStrategySampleControlView.cs" />
     <Compile Include="Views\WebControls\IRepeaterView.cs" />
     <Compile Include="Views\WebControls\ISimpleMvpControlView.cs" />
-    <Compile Include="Views\WebControls\PresenterDiscoveryStrategySampleControlView.cs" />
     <Compile Include="Views\WebControls\RepeaterView.cs" />
     <Compile Include="Views\WebControls\SimpleMvpControlView.cs" />
+    <Compile Include="WebControls\Presenters\PresenterDiscoveryStrategySampleControlPresenter.cs" />
+    <Compile Include="WebControls\Views\IPresenterDiscoveryStrategySampleControlView.cs" />
+    <Compile Include="WebControls\Views\PresenterDiscoveryStrategySampleControlView.cs" />
     <Content Include="ControlWithoutMvpPageSample.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Views\DefaultView.aspx" />
