@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.IoC.St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.IoC.StructureMap.Tests", "HansKindberg.Web.Mvp.IoC.StructureMap.Tests\HansKindberg.Web.Mvp.IoC.StructureMap.Tests.csproj", "{58EE3302-BB18-443D-B016-AE2072F1A467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.WebApplication", "HansKindberg.Web.Mvp.WebApplication\HansKindberg.Web.Mvp.WebApplication.csproj", "{F5FA27B5-20AE-41A1-81F5-34E574D6B726}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = HansKindberg-Web-MVP.vsmdi
@@ -63,6 +65,10 @@ Global
 		{58EE3302-BB18-443D-B016-AE2072F1A467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58EE3302-BB18-443D-B016-AE2072F1A467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58EE3302-BB18-443D-B016-AE2072F1A467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5FA27B5-20AE-41A1-81F5-34E574D6B726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5FA27B5-20AE-41A1-81F5-34E574D6B726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5FA27B5-20AE-41A1-81F5-34E574D6B726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5FA27B5-20AE-41A1-81F5-34E574D6B726}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
