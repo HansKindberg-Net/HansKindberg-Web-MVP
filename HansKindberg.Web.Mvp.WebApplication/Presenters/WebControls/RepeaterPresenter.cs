@@ -63,7 +63,7 @@ namespace HansKindberg.Web.Mvp.WebApplication.Presenters.WebControls
 
 		#endregion
 
-		#region Methods
+		#region Eventhandlers
 
 		[SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
 		protected override void OnViewCreatingChildControls(object sender, EventArgs e)
@@ -96,6 +96,8 @@ namespace HansKindberg.Web.Mvp.WebApplication.Presenters.WebControls
 			if(this.View.FooterTemplate != null)
 				this.AddTemplate(new RepeaterItem(0, ListItemType.Footer), this.View.FooterTemplate);
 		}
+
+		protected override void OnViewInvalidatingInternalState(object sender, EventArgs e) {}
 
 		#endregion
 	}

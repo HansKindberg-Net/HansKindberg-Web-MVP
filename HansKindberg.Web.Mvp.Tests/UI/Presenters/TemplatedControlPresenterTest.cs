@@ -88,15 +88,9 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 		}
 
 		[TestMethod]
-		public void Constructor_ShouldAddADataBindingChildrenEventHandler()
+		public void Constructor_ShouldAddAnInvalidatingInternalStateEventHandler()
 		{
-			ConstructorShouldAddAnEventHandler("DataBindingChildren", typeof(ControlView));
-		}
-
-		[TestMethod]
-		public void Constructor_ShouldAddAnEnsuringChildControlsEventHandler()
-		{
-			ConstructorShouldAddAnEventHandler("EnsuringChildControls", typeof(ControlView));
+			ConstructorShouldAddAnEventHandler("InvalidatingInternalState", typeof(TemplatedControlView));
 		}
 
 		#endregion
@@ -116,6 +110,7 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 		#region Methods
 
 		protected internal override void OnViewCreatingChildControls(object sender, EventArgs e) {}
+		protected internal override void OnViewInvalidatingInternalState(object sender, EventArgs e) {}
 
 		#endregion
 	}

@@ -13,6 +13,7 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 		protected TemplatedControlPresenter(TView view) : base(view)
 		{
 			this.View.CreatingChildControls += this.OnViewCreatingChildControls;
+			this.View.InvalidatingInternalState += this.OnViewInvalidatingInternalState;
 		}
 
 		#endregion
@@ -41,6 +42,8 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 			if(!this.OnDataBindingRaised)
 				this.View.DataBind(true, false, false);
 		}
+
+		protected internal abstract void OnViewInvalidatingInternalState(object sender, EventArgs e);
 
 		#endregion
 	}

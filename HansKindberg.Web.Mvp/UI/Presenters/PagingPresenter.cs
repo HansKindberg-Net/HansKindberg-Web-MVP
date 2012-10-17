@@ -213,6 +213,8 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 				this.AddTemplate(new PagingSummaryContainer(this.PageableView.PagingItems), this.View.FooterTemplate);
 		}
 
+		protected internal override void OnViewInvalidatingInternalState(object sender, EventArgs e) {}
+
 		#endregion
 	}
 }
