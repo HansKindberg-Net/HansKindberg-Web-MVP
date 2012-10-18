@@ -5,7 +5,7 @@ using HansKindberg.Web.Mvp.UI.Views;
 namespace HansKindberg.Web.Mvp.UI.Presenters
 {
 	public abstract class AutoDataBindControlPresenter<TView> : ControlPresenter<TView>
-		where TView : class, IAutoDataBindControlView
+		where TView : class, IAutoDataBindableView
 	{
 		#region Constructors
 

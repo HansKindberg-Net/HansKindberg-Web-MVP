@@ -99,7 +99,7 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 	internal class AutoDataBindControlPresenterTestAutoDataBindControlView : AutoDataBindControlView {}
 
 	internal class AutoDataBindControlPresenterTestAutoDataBindControlPresenter<TView> : AutoDataBindControlPresenter<TView>
-		where TView : class, IAutoDataBindControlView
+		where TView : class, IAutoDataBindableView
 	{
 		#region Constructors
 

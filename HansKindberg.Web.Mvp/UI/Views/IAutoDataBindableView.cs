@@ -1,6 +1,6 @@
 ﻿namespace HansKindberg.Web.Mvp.UI.Views
 {
-	public interface IAutoDataBindControlView : IControlView
+	public interface IAutoDataBindableView : IControlView
 	{
 		#region Properties
 
@@ -15,5 +15,5 @@
 		#endregion
 	}
 
-	public interface IAutoDataBindControlView<TModel> : IAutoDataBindControlView, IControlView<TModel> where TModel : class, new() {}
+	public interface IAutoDataBindControlView<TModel> : IAutoDataBindableView, IControlView<TModel> where TModel : class, new() {}
 }
