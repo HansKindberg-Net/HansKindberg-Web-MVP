@@ -75,7 +75,7 @@
     <Compile Include="TypeWrapper.cs" />
     <Compile Include="UI\IPage.cs" />
     <Compile Include="UI\PageWrapper.cs" />
-    <Compile Include="UI\Presenters\AutoDataBindControlPresenter.cs" />
+    <Compile Include="UI\Presenters\AutoDataBindablePresenter.cs" />
     <Compile Include="UI\Presenters\ControlPresenter.cs" />
     <Compile Include="UI\Presenters\PagingPresenter.cs" />
     <Compile Include="UI\Presenters\TemplatedControlPresenter.cs" />

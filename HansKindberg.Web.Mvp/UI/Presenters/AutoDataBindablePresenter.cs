@@ -4,12 +4,12 @@ using HansKindberg.Web.Mvp.UI.Views;
 
 namespace HansKindberg.Web.Mvp.UI.Presenters
 {
-	public abstract class AutoDataBindControlPresenter<TView> : ControlPresenter<TView>
+	public abstract class AutoDataBindablePresenter<TView> : ControlPresenter<TView>
 		where TView : class, IAutoDataBindableView
 	{
 		#region Constructors
 
-		protected AutoDataBindControlPresenter(TView view) : base(view)
+		protected AutoDataBindablePresenter(TView view) : base(view)
 		{
 			this.View.DataBinding += this.OnViewDataBinding;
 			this.View.DataBindingChildren += this.OnViewDataBindingChildren;

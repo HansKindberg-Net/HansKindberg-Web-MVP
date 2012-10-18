@@ -5,7 +5,7 @@ using HansKindberg.Web.Mvp.UI.Views;
 
 namespace HansKindberg.Web.Mvp.UI.Presenters
 {
-	public abstract class TemplatedControlPresenter<TView> : AutoDataBindControlPresenter<TView>
+	public abstract class TemplatedControlPresenter<TView> : AutoDataBindablePresenter<TView>
 		where TView : class, ITemplatedControlView
 	{
 		#region Constructors
