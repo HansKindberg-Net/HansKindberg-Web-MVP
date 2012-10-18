@@ -25,9 +25,7 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 			if(namingContainer == null)
 				return null;
 
-			Control foundControl = namingContainer.FindControl(controlId) ?? this.FindControlHierarchic(namingContainer.NamingContainer, controlId);
-
-			return foundControl;
+			return namingContainer.FindControl(controlId) ?? this.FindControlHierarchic(namingContainer.NamingContainer, controlId);
 		}
 
 		#endregion
