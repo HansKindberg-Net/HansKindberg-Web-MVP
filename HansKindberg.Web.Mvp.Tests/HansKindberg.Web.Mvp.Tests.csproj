@@ -76,7 +76,7 @@
     <Compile Include="Extensions\StringExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeWrapperTest.cs" />
-    <Compile Include="UI\Presenters\AutoDataBindControlPresenterTest.cs" />
+    <Compile Include="UI\Presenters\AutoDataBindablePresenterTest.cs" />
     <Compile Include="UI\Presenters\ControlPresenterTest.cs" />
     <Compile Include="UI\Presenters\TemplatedControlPresenterTest.cs" />
     <Compile Include="UI\Views\ControlViewTest.cs" />

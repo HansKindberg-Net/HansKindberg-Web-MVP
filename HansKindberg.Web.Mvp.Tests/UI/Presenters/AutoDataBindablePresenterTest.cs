@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 {
 	[TestClass]
-	public class AutoDataBindControlPresenterTest
+	public class AutoDataBindablePresenterTest
 	{
 		#region Fields
 
@@ -22,13 +22,13 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 
 		private static void ConstructorShouldAddAnEventHandler(string eventName, Type eventFieldType)
 		{
-			using(AutoDataBindControlPresenterTestAutoDataBindControlView view = new AutoDataBindControlPresenterTestAutoDataBindControlView())
+			using(AutoDataBindablePresenterTestAutoDataBindableView view = new AutoDataBindablePresenterTestAutoDataBindableView())
 			{
 				FieldInfo eventField = eventFieldType.GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic);
 				Assert.IsNotNull(eventField);
 				Assert.IsNull(eventField.GetValue(view));
 
-				AutoDataBindControlPresenterTestAutoDataBindControlPresenter<AutoDataBindControlPresenterTestAutoDataBindControlView> presenter = new AutoDataBindControlPresenterTestAutoDataBindControlPresenter<AutoDataBindControlPresenterTestAutoDataBindControlView>(view);
+				AutoDataBindablePresenterTestAutoDataBindablePresenter<AutoDataBindablePresenterTestAutoDataBindableView> presenter = new AutoDataBindablePresenterTestAutoDataBindablePresenter<AutoDataBindablePresenterTestAutoDataBindableView>(view);
 				Assert.IsNotNull(presenter);
 
 				Delegate eventDelegate = (Delegate) eventField.GetValue(view);
@@ -39,11 +39,11 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 
 		private static void ConstructorShouldAddAnEventHandler(object eventHandlerObject)
 		{
-			using(AutoDataBindControlPresenterTestAutoDataBindControlView view = new AutoDataBindControlPresenterTestAutoDataBindControlView())
+			using(AutoDataBindablePresenterTestAutoDataBindableView view = new AutoDataBindablePresenterTestAutoDataBindableView())
 			{
 				Assert.IsNull(GetEventHandler(view, eventHandlerObject));
 
-				AutoDataBindControlPresenterTestAutoDataBindControlPresenter<AutoDataBindControlPresenterTestAutoDataBindControlView> presenter = new AutoDataBindControlPresenterTestAutoDataBindControlPresenter<AutoDataBindControlPresenterTestAutoDataBindControlView>(view);
+				AutoDataBindablePresenterTestAutoDataBindablePresenter<AutoDataBindablePresenterTestAutoDataBindableView> presenter = new AutoDataBindablePresenterTestAutoDataBindablePresenter<AutoDataBindablePresenterTestAutoDataBindableView>(view);
 				Assert.IsNotNull(presenter);
 
 				EventHandler eventHandler = GetEventHandler(view, eventHandlerObject);
@@ -96,14 +96,14 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 		#endregion
 	}
 
-	internal class AutoDataBindControlPresenterTestAutoDataBindControlView : AutoDataBindableControlView {}
+	internal class AutoDataBindablePresenterTestAutoDataBindableView : AutoDataBindableControlView {}
 
-	internal class AutoDataBindControlPresenterTestAutoDataBindControlPresenter<TView> : AutoDataBindablePresenter<TView>
+	internal class AutoDataBindablePresenterTestAutoDataBindablePresenter<TView> : AutoDataBindablePresenter<TView>
 		where TView : class, IAutoDataBindableView
 	{
 		#region Constructors
 
-		public AutoDataBindControlPresenterTestAutoDataBindControlPresenter(TView view) : base(view) {}
+		public AutoDataBindablePresenterTestAutoDataBindablePresenter(TView view) : base(view) {}
 
 		#endregion
 	}
