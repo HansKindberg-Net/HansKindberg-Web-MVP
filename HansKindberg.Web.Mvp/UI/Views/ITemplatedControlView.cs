@@ -12,5 +12,5 @@ namespace HansKindberg.Web.Mvp.UI.Views
 		#endregion
 	}
 
-	public interface ITemplatedControlView<TModel> : ITemplatedControlView, IAutoDataBindControlView<TModel> where TModel : class, new() {}
+	public interface ITemplatedControlView<TModel> : ITemplatedControlView, IAutoDataBindableView<TModel> where TModel : class, new() {}
 }

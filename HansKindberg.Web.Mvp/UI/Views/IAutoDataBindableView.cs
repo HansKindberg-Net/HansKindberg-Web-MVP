@@ -15,5 +15,5 @@
 		#endregion
 	}
 
-	public interface IAutoDataBindControlView<TModel> : IAutoDataBindableView, IControlView<TModel> where TModel : class, new() {}
+	public interface IAutoDataBindableView<TModel> : IAutoDataBindableView, IControlView<TModel> where TModel : class, new() {}
 }

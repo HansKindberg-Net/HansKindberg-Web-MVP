@@ -44,7 +44,7 @@ namespace HansKindberg.Web.Mvp.UI.Views
 		#endregion
 	}
 
-	public abstract class AutoDataBindControlView<TModel> : AutoDataBindControlView, IAutoDataBindControlView<TModel> where TModel : class, new()
+	public abstract class AutoDataBindControlView<TModel> : AutoDataBindControlView, IAutoDataBindableView<TModel> where TModel : class, new()
 	{
 		#region Fields
 
