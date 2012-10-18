@@ -81,14 +81,23 @@
     <Compile Include="UI\Presenters\TemplatedControlPresenter.cs" />
     <Compile Include="UI\Views\AutoDataBindableControlView.cs" />
     <Compile Include="UI\Views\ControlView.cs" />
+    <Compile Include="UI\Views\AutoDataBindableUserControlView.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\Views\IAutoDataBindableView.cs" />
     <Compile Include="UI\Views\IControlView.cs" />
     <Compile Include="UI\Views\IPagingView.cs" />
     <Compile Include="UI\Views\ITemplatedControlView.cs" />
+    <Compile Include="UI\Views\MasterPageView.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\Views\PagingItemContainer.cs" />
     <Compile Include="UI\Views\PagingSummaryContainer.cs" />
     <Compile Include="UI\Views\PagingView.cs" />
     <Compile Include="UI\Views\TemplatedControlView.cs" />
+    <Compile Include="UI\Views\UserControlView.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ViewHelper.cs" />
   </ItemGroup>
   <ItemGroup>
