@@ -31,9 +31,6 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 
 		protected internal virtual void OnViewDataBinding(object sender, EventArgs e)
 		{
-			if(e == null)
-				throw new ArgumentNullException("e");
-
 			this.OnDataBindingRaised = true;
 		}
 
@@ -57,9 +54,6 @@ namespace HansKindberg.Web.Mvp.UI.Presenters
 
 		protected internal virtual void OnViewPreRender(object sender, EventArgs e)
 		{
-			if(e == null)
-				throw new ArgumentNullException("e");
-
 			if(!this.View.AutoDataBind)
 				return;
 
