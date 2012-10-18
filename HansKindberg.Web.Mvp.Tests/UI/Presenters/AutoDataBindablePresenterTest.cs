@@ -5,6 +5,7 @@ using System.Web.UI;
 using HansKindberg.Web.Mvp.UI.Presenters;
 using HansKindberg.Web.Mvp.UI.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 {
@@ -93,7 +94,77 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 			return events[eventHandlerObject] as EventHandler;
 		}
 
+		[TestMethod]
+		public void OnViewDataBindingChildren_IfTheCancelEventArgsCancelPropertyIsFalse_ShouldSetTheChildrenAreDataBoundPropertyToTrue()
+		{
+			AutoDataBindablePresenter<IAutoDataBindableView> presenter = new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object;
+			Assert.IsFalse(presenter.ChildrenAreDataBound);
+			presenter.OnViewDataBindingChildren(new object(), new CancelEventArgs {Cancel = false});
+			Assert.IsTrue(presenter.ChildrenAreDataBound);
+		}
+
+		[TestMethod]
+		public void OnViewDataBindingChildren_IfTheCancelEventArgsCancelPropertyIsTrue_ShouldNotSetTheChildrenAreDataBoundPropertyToTrue()
+		{
+			AutoDataBindablePresenter<IAutoDataBindableView> presenter = new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object;
+			Assert.IsFalse(presenter.ChildrenAreDataBound);
+			presenter.OnViewDataBindingChildren(new object(), new CancelEventArgs {Cancel = true});
+			Assert.IsFalse(presenter.ChildrenAreDataBound);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void OnViewDataBindingChildren_IfTheCancelEventArgsParameterIsNull_ShouldThrowAnArgumentNullException()
+		{
+			new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object.OnViewDataBindingChildren(new object(), null);
+		}
+
+		[TestMethod]
+		public void OnViewDataBinding_ShouldSetTheOnDataBindingRaisedPropertyToTrue()
+		{
+			AutoDataBindablePresenter<IAutoDataBindableView> presenter = new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object;
+			Assert.IsFalse(presenter.OnDataBindingRaised);
+			presenter.OnViewDataBinding(new object(), EventArgs.Empty);
+			Assert.IsTrue(presenter.OnDataBindingRaised);
+		}
+
+		[TestMethod]
+		public void OnViewEnsuringChildControls_IfTheCancelEventArgsCancelPropertyIsFalse_ShouldSetTheChildControlsAreEnsuredPropertyToTrue()
+		{
+			AutoDataBindablePresenter<IAutoDataBindableView> presenter = new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object;
+			Assert.IsFalse(presenter.ChildControlsAreEnsured);
+			presenter.OnViewEnsuringChildControls(new object(), new CancelEventArgs {Cancel = false});
+			Assert.IsTrue(presenter.ChildControlsAreEnsured);
+		}
+
+		[TestMethod]
+		public void OnViewEnsuringChildControls_IfTheCancelEventArgsCancelPropertyIsTrue_ShouldNotSetTheChildControlsAreEnsuredPropertyToTrue()
+		{
+			AutoDataBindablePresenter<IAutoDataBindableView> presenter = new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object;
+			Assert.IsFalse(presenter.ChildControlsAreEnsured);
+			presenter.OnViewEnsuringChildControls(new object(), new CancelEventArgs {Cancel = true});
+			Assert.IsFalse(presenter.ChildControlsAreEnsured);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void OnViewEnsuringChildControls_IfTheCancelEventArgsParameterIsNull_ShouldThrowAnArgumentNullException()
+		{
+			new Mock<AutoDataBindablePresenter<IAutoDataBindableView>>(new object[] {Mock.Of<IAutoDataBindableView>()}) {CallBase = true}.Object.OnViewEnsuringChildControls(new object(), null);
+		}
+
 		#endregion
+
+		//[TestMethod]
+		//public void OnViewPreRender_IfTheAutoDataBindPropertyOfTheViewIsSetToFalse_ShouldNotR_____________()
+		//{
+		//    Mock<IAutoDataBindableView> viewMock = new Mock<IAutoDataBindableView>();
+		//    viewMock.Setup(view => view.AutoDataBind).Returns(false);
+		//    //if (!this.View.AutoDataBind)
+		//    //    return;
+		//    //if (!this.OnDataBindingRaised || !this.ChildrenAreDataBound)
+		//    //    this.View.DataBind(!this.OnDataBindingRaised, !this.ChildControlsAreEnsured, !this.ChildrenAreDataBound);
+		//}
 	}
 
 	internal class AutoDataBindablePresenterTestAutoDataBindableView : AutoDataBindableControlView {}
