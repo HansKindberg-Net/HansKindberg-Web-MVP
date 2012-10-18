@@ -96,7 +96,7 @@ namespace HansKindberg.Web.Mvp.Tests.UI.Presenters
 		#endregion
 	}
 
-	internal class AutoDataBindControlPresenterTestAutoDataBindControlView : AutoDataBindControlView {}
+	internal class AutoDataBindControlPresenterTestAutoDataBindControlView : AutoDataBindableControlView {}
 
 	internal class AutoDataBindControlPresenterTestAutoDataBindControlPresenter<TView> : AutoDataBindControlPresenter<TView>
 		where TView : class, IAutoDataBindableView

@@ -4,7 +4,7 @@ using System.Web.UI;
 namespace HansKindberg.Web.Mvp.UI.Views
 {
 	[ParseChildren(ChildrenAsProperties = true), PersistChildren(false)]
-	public abstract class TemplatedControlView : AutoDataBindControlView, ITemplatedControlView
+	public abstract class TemplatedControlView : AutoDataBindableControlView, ITemplatedControlView
 	{
 		#region Events
 

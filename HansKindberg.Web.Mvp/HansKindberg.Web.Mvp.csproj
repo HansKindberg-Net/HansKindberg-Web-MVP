@@ -79,7 +79,7 @@
     <Compile Include="UI\Presenters\ControlPresenter.cs" />
     <Compile Include="UI\Presenters\PagingPresenter.cs" />
     <Compile Include="UI\Presenters\TemplatedControlPresenter.cs" />
-    <Compile Include="UI\Views\AutoDataBindControlView.cs" />
+    <Compile Include="UI\Views\AutoDataBindableControlView.cs" />
     <Compile Include="UI\Views\ControlView.cs" />
     <Compile Include="UI\Views\IAutoDataBindableView.cs" />
     <Compile Include="UI\Views\IControlView.cs" />

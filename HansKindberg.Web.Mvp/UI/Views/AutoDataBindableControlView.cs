@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace HansKindberg.Web.Mvp.UI.Views
 {
-	public abstract class AutoDataBindControlView : ControlView, IAutoDataBindableView
+	public abstract class AutoDataBindableControlView : ControlView, IAutoDataBindableView
 	{
 		#region Fields
 
@@ -44,7 +44,7 @@ namespace HansKindberg.Web.Mvp.UI.Views
 		#endregion
 	}
 
-	public abstract class AutoDataBindControlView<TModel> : AutoDataBindControlView, IAutoDataBindableView<TModel> where TModel : class, new()
+	public abstract class AutoDataBindableControlView<TModel> : AutoDataBindableControlView, IAutoDataBindableView<TModel> where TModel : class, new()
 	{
 		#region Fields
 
