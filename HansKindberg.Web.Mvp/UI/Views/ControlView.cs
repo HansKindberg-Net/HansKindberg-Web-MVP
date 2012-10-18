@@ -36,16 +36,6 @@ namespace HansKindberg.Web.Mvp.UI.Views
 
 		#endregion
 
-		#region Eventhandlers
-
-		protected override void OnInit(EventArgs e)
-		{
-			PageViewHostWrapper.Register(this, this.Context, false, this.IPage);
-			base.OnInit(e);
-		}
-
-		#endregion
-
 		#region Methods
 
 		protected override void CreateChildControls()
@@ -82,6 +72,16 @@ namespace HansKindberg.Web.Mvp.UI.Views
 			}
 
 			base.EnsureChildControls();
+		}
+
+		#endregion
+
+		#region Eventhandlers
+
+		protected override void OnInit(EventArgs e)
+		{
+			PageViewHostWrapper.Register(this, this.Context, false, this.IPage);
+			base.OnInit(e);
 		}
 
 		#endregion
