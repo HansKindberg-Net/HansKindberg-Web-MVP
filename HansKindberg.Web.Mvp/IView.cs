@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HansKindberg.Web.Mvp
 {
@@ -10,6 +11,14 @@ namespace HansKindberg.Web.Mvp
 		event EventHandler Disposed;
 		event EventHandler PreRender;
 		event EventHandler Unload;
+
+		#endregion
+
+		#region Methods
+
+		[SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#")]
+		[SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings")]
+		string ResolveUrl(string relativeUrl);
 
 		#endregion
 	}
