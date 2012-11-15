@@ -1,4 +1,5 @@
 ﻿using System;
+using WebFormsMvp;
 using WebFormsMvp.Binder;
 
 namespace HansKindberg.Web.Mvp.Binder
@@ -19,6 +20,15 @@ namespace HansKindberg.Web.Mvp.Binder
 				throw new ArgumentNullException("presenterBinder");
 
 			this._presenterBinder = presenterBinder;
+		}
+
+		#endregion
+
+		#region Properties
+
+		public virtual IMessageCoordinator MessageCoordinator
+		{
+			get { return this._presenterBinder.MessageCoordinator; }
 		}
 
 		#endregion
