@@ -2,7 +2,7 @@ _ReSharper*/
 bin/
 debug/
 obj/
-packages/
+packages/*
 release/
 testresults/
 Web.config
