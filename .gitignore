@@ -8,3 +8,6 @@ testresults/
 Web.config
 *.suo
 *.user
+.nuget/NuGet.exe
+
+!packages/repositories.config
