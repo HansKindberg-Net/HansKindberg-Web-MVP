@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{31E522A2-7AFE-4646-957E-4E97A2C56476}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -21,10 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 		CodeAnalysis\SolutionSuppressions.cs = CodeAnalysis\SolutionSuppressions.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp", "HansKindberg.Web.Mvp\HansKindberg.Web.Mvp.csproj", "{B46222DC-6B0B-402C-BE78-D76C66C8F131}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.Tests", "HansKindberg.Web.Mvp.Tests\HansKindberg.Web.Mvp.Tests.csproj", "{0B18991D-37E0-4B92-8E15-9A5FF7366E79}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC603E03-C0B9-4E94-9930-9DE6DFA89D8C}"
 	ProjectSection(SolutionItems) = preProject
 		HansKindberg-Web-MVP.vsmdi = HansKindberg-Web-MVP.vsmdi
@@ -33,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp", "HansKindberg.Web.Mvp\HansKindberg.Web.Mvp.csproj", "{B46222DC-6B0B-402C-BE78-D76C66C8F131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.Tests", "HansKindberg.Web.Mvp.Tests\HansKindberg.Web.Mvp.Tests.csproj", "{0B18991D-37E0-4B92-8E15-9A5FF7366E79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.IoC.StructureMap", "HansKindberg.Web.Mvp.IoC.StructureMap\HansKindberg.Web.Mvp.IoC.StructureMap.csproj", "{A3667AEE-EA26-43B5-81E8-2FF410F25241}"
 EndProject
