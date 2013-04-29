@@ -23,11 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC603E03-C0B9-4E94-9930-9DE6DFA89D8C}"
 	ProjectSection(SolutionItems) = preProject
-		HansKindberg-Web-MVP.vsmdi = HansKindberg-Web-MVP.vsmdi
 		HansKindberg.snk = HansKindberg.snk
-		Local.testsettings = Local.testsettings
 		README.md = README.md
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp", "HansKindberg.Web.Mvp\HansKindberg.Web.Mvp.csproj", "{B46222DC-6B0B-402C-BE78-D76C66C8F131}"
@@ -41,9 +38,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HansKindberg.Web.Mvp.WebApplication", "HansKindberg.Web.Mvp.WebApplication\HansKindberg.Web.Mvp.WebApplication.csproj", "{F5FA27B5-20AE-41A1-81F5-34E574D6B726}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = HansKindberg-Web-MVP.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
